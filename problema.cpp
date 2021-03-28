@@ -21,6 +21,7 @@ typedef struct Book MyBook; // renomeando um tipo de dados para um nome mais int
 
 // FUNCAO
 void imprimir(MyBook livro) { // PARAMETRO
+    printf("\n==================\n\n");
     printf("ID: %d\n", livro.id);
     printf("Titulo: %s", livro.titulo);
     printf("Autor: %s", livro.autor);
@@ -28,6 +29,83 @@ void imprimir(MyBook livro) { // PARAMETRO
     printf("ISBN: %s", livro.isbn);
     printf("Páginas: %d\n", livro.numPaginas);
     printf("Valor: R$ %5.2f\n", livro.valor);
+    printf("\n==================\n\n");
+}
+
+void buscaLivro(int tamanho, int id, MyBook livros[MAX]){
+    if (tamanho == 0) {
+        printf("INFO: O sistema não possui livros para pesquisa.");
+    } else {
+        // ler o identificador
+        printf("Digite o identificador desejado:\n");
+        scanf("%d", &id);
+        // buscar ele na lista de livros
+        // busca sequencial
+        int i = 0;
+        int achou = FALSE;
+        for (i = 0; i < tamanho; i++) {
+            // comparando o ID passado com os IDs dos livros
+            if (livros[i].id == id) {
+                printf("Livro encontrado!\n");
+                imprimir(livros[i]);
+                achou = TRUE;
+                break;
+            }
+        }
+        // caso não encontre o livro
+        if (achou == FALSE) {
+            printf("O livro não existe!\n");
+        }
+    }
+}
+// function that will print the vector return
+void imprimir(MyBook livros[MAX], int tamanho) {
+    printf("O tamanho que está entrando é %d \n\n", tamanho);
+    // printf("\n");
+    for (int i = 0; i < tamanho; i++) {
+        livros[i];
+    }  
+    // printf("\n\n");
+}
+
+// retornasse o ID do livro
+int retornaIdLiro(int tamanho, int id, MyBook livros[MAX] ){
+    int pos = 0;
+    if (tamanho == 0) {
+        printf("INFO: O sistema não possui livros para pesquisa.");
+    } else {
+        // ler o identificador
+        printf("Digite o identificador desejado:\n");
+        scanf("%d", &id);
+        // busca sequencial
+        int i = 0;
+        int achou = FALSE;
+        // achar a posição do elemento e ser retirado
+        for (int i = 0; i < tamanho; i++) {
+            if (livros[i].id == id) {
+                pos = i; // posição encontrada para remanejamento
+                achou = TRUE;
+                break;
+            }
+        }
+        // break o sistema 
+        if (pos == 0) {
+            printf("Elemento não encontrado.\n");
+            return 0;
+        }
+        // remanejando os elementos
+        for (int i = pos + 1; i < tamanho; i++) {
+            livros[i-1] = livros[i]; 
+            // imprimir(livros, tamanho);
+        }
+        tamanho--;
+        imprimir(livros, tamanho);
+        
+        // caso não encontre o livro
+        if (achou == FALSE) {
+            printf("O livro não existe!\n");
+        }
+    }
 }
 
 int main(void) { //PRINCIPAL
@@ -96,33 +174,11 @@ int main(void) { //PRINCIPAL
                 }
             break;
             case 3: // recuperar por ID
-                if (tamanho == 0) {
-                    printf("INFO: O sistema não possui livros para pesquisa.");
-                } else {
-                    // ler o identificador
-                    printf("Digite o identificador desejado:\n");
-                    scanf("%d", &id);
-                    // buscar ele na lista de livros
-                    // busca sequencial
-                    int i = 0;
-                    int achou = FALSE;
-                    for (i = 0; i < tamanho; i++) {
-                        // comparando o ID passado com os IDs dos livros
-                        if (livros[i].id == id) {
-                            printf("Livro encontrado!\n");
-                            imprimir(livros[i]);
-                            achou = TRUE;
-                            break;
-                        }
-                    }
-                    // caso não encontre o livro
-                    if (achou == FALSE) {
-                        printf("O livro não existe!\n");
-                    }
-                }
+                buscaLivro(tamanho, id, livros);
             break;
             case 4: // Atualizar
-                // code here
+                // A ideia é recuperar o ID e depois realizar a exclusão do livro em outra função
+                retornaIdLiro(tamanho, id, livros);
             break;
             case 5: // Excluir
                 // code here
@@ -130,7 +186,7 @@ int main(void) { //PRINCIPAL
                 // tamanho --;
             break;
             case 6: // sair do sistema
-            
+
             break;
             default:
             printf("ALERTA: operação inválida");
