@@ -58,14 +58,14 @@ void buscaLivro(int tamanho, int id, MyBook livros[MAX]){
         }
     }
 }
-// function that will print the vector return
-void imprimir(MyBook livros[MAX], int tamanho) {
+// 
+void imprimirTamanho(MyBook livros[MAX], int tamanho) {
     printf("O tamanho que está entrando é %d \n\n", tamanho);
-    // printf("\n");
+    printf("\n");
     for (int i = 0; i < tamanho; i++) {
-        livros[i];
+        printf("%d  ", livros[i]);
     }  
-    // printf("\n\n");
+    printf("\n\n");
 }
 
 // retornasse o ID do livro
@@ -94,12 +94,13 @@ int retornaIdLiro(int tamanho, int id, MyBook livros[MAX] ){
             return 0;
         }
         // remanejando os elementos
-        for (int i = pos + 1; i < tamanho; i++) {
+        for (int i = pos + 1; i < tamanho - 1; i++) {
             livros[i-1] = livros[i]; 
-            // imprimir(livros, tamanho);
+            imprimirTamanho(livros, tamanho);
         }
         tamanho--;
-        imprimir(livros, tamanho);
+
+        imprimirTamanho(livros, tamanho);
         
         // caso não encontre o livro
         if (achou == FALSE) {
